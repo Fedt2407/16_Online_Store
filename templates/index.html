@@ -1,39 +1,36 @@
 {% extends 'base.html' %} {% block content %}
 
-<main>
-  <section class="hero">
-    <div class="banner">
-      <h1>Welcome to our online store!</h1>
-      <div class="banner-product">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqknv9bG7lLalT0TE9Bs_VHiWRRIMZONbYew&s"
-          alt="Featured Product"
-        />
-        <div>
-          <h2>Product Name</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore.
-          </p>
-          <a href="#" class="btn">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="featured-products">
-    <h1>Featured products</h1>
-    {% for product in products %}
-    <div class="product-card">
-      <img src="{{product.img_url}}" alt="Product 1" />
+<section class="hero">
+  <div class="banner">
+    <h1>Welcome to our online store!</h1>
+    <div class="banner-product">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqknv9bG7lLalT0TE9Bs_VHiWRRIMZONbYew&s"
+        alt="Featured Product"
+      />
       <div>
-        <h2>{{product.name}}</h2>
-        <p>${{product.price}}</p>
-        <button class="add-to-cart">Add to Cart</button>
+        <h2>Product Name</h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore.
+        </p>
+        <a href="#" class="btn">Shop Now</a>
       </div>
     </div>
-    {% endfor %}
-  </section>
-</main>
+  </div>
+</section>
+
+<section class="featured-products">
+  {% for product in products %}
+  <div class="product-card">
+    <img src="{{product.img_url}}" alt="Product 1" />
+    <div>
+      <h2>{{product.name}}</h2>
+      <p>${{product.price}}</p>
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+  </div>
+  {% endfor %}
+</section>
 
 {% endblock %}
