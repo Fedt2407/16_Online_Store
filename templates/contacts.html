@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom ecommerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  </head>
+  <body>
+    <header>
+    <img src="{{ url_for('static', filename='ws_logo.png') }}" alt="Logo"/>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="#">Register</a></li>
+          <li><a href="{{ url_for('contacts') }}">Contacts</a></li>
+          <li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+        </ul>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="inner">
+        <h2 class="major">Get in touch</h2>
+        <p>
+          Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus
+          non pulvinar erat. Fusce tincidunt, nisl eget mattis egestas, purus ipsum
+          consequat orci, sit amet lobortis lorem lacus in tellus. Sed ac elementum
+          arcu. Quisque placerat auctor laoreet.
+        </p>
+        <form method="post" action="#">
+          <div class="fields">
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea name="message" id="message" rows="4"></textarea>
+            </div>
+          </div>
+        </form>
+        <button type="submit" value="Send Message" class="btn">Send Message</button>
+      </div>
+
+    <footer>
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+        <p>123 Main Street, City, Country</p>
+        <p>Email: info@yourcompany.com</p>
+        <p>Phone: +1 123-456-7890</p>
+    </footer>
+  </body>
+</html>

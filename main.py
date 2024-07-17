@@ -43,5 +43,9 @@ def home():
     products = Product.query.all()
     return render_template('index.html', products=products)
 
+@app.route('/contacts') 
+def contacts():
+    return render_template('contacts.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -12,8 +12,9 @@
     <img src="{{ url_for('static', filename='ws_logo.png') }}" alt="Logo"/>
       <nav>
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
           <li><a href="#">Register</a></li>
+            <li><a href="{{ url_for('contacts') }}">Contacts</a></li>
           <li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
         </ul>
         </ul>
