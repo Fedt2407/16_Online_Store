@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Custom ecommerce</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   </head>
   <body>
     <header>
-      <img src="logo.png" alt="Logo" />
+    <img src="{{ url_for('static', filename='ws_logo.png') }}" alt="Logo"/>
       <nav>
         <ul>
           <li><a href="#">Home</a></li>
           <li><a href="#">Register</a></li>
-          <li><a href="#">Checkout</a></li>
+          <li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+        </ul>
         </ul>
       </nav>
     </header>
