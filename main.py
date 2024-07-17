@@ -55,5 +55,10 @@ def register():
 def login():
     return render_template('login.html')
 
+@app.route('/product/<int:id>')
+def product(id):
+    product = Product.query.get(id)
+    return render_template('product.html', product=product)
+
 if __name__ == '__main__':
     app.run(debug=True)
