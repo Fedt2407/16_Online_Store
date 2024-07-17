@@ -351,17 +351,18 @@ form .field textarea {
 /* Product Page */
 .product-page {
   display: flex;
-  gap: 40px;
   margin-top: 40px;
 }
 
-.product-image img {
-  max-width: 100%;
+.product-image {
+  width: 400px;
   border-radius: 10px;
+  margin: 1rem;
 }
 
 .product-info {
   flex: 1;
+  padding: 1rem;
 }
 
 .product-info h1 {
@@ -371,7 +372,8 @@ form .field textarea {
 
 .product-price {
   font-size: 24px;
-  color: #e74c3c;
+  color: #ffd200;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
@@ -381,7 +383,7 @@ form .field textarea {
 }
 
 .btn-buy {
-  background-color: #e74c3c;
+  background-color: #ffd200;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -392,7 +394,7 @@ form .field textarea {
 }
 
 .btn-buy:hover {
-  background-color: #c0392b;
+  background-color: #333;
 }
 
 /* Media Queries */
