@@ -70,6 +70,16 @@ nav a:hover {
   margin-bottom: 1.5rem;
 }
 
+.banner-product {
+  display: flex;
+}
+
+.banner-product img {
+  width: 200px;
+  margin-right: 2rem;
+  border-radius: 5px;
+}
+
 .featured-product img {
   width: 300px;
   margin-bottom: 1rem;
