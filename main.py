@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, g
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 # DB setup
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'your_secret_key_here'  # Substitute with a secret key of your choice
 db = SQLAlchemy(app)
 
 # Product model
@@ -20,6 +21,7 @@ class Product(db.Model):
 # User model
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
@@ -59,13 +61,14 @@ def contacts():
 def register():
     message = ""
     if request.method == 'POST':
+        name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm-password')
 
         if password == confirm_password:
             hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-            new_user = User(email=email, password=hashed_password)
+            new_user = User(name=name, email=email, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
             message = "User registered successfully!"
@@ -84,12 +87,22 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
+            session['user_name'] = user.name  # Imposta il nome dell'utente nella sessione
             # Login successful
             return redirect(url_for('home'))  # Redirect to home page or another appropriate page
         else:
             message = "Invalid email or password"
 
     return render_template('login.html', message=message)
+
+@app.context_processor
+def inject_user():
+    return dict(user_name=session.get('user_name'))
+
+@app.route('/logout')
+def logout():
+    session.pop('user_name', None)
+    return redirect(url_for('home'))
 
 @app.route('/product/<int:id>')
 def product(id):

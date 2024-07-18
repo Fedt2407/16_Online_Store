@@ -23,7 +23,13 @@
           <li>
             <a href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
           </li>
-          <li><a href="{{ url_for('register') }}">Login</a></li>
+          {% if user_name %}
+            <li class="user-name">Hello, {{ user_name }}</li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+            <li><a href="{{ url_for('register') }}">Login</a></li>
+          {% endif %}
+        </ul>
         </ul>
       </nav>
     </header>
