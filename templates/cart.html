@@ -2,7 +2,6 @@
 
 <main>
   <section class="cart-page">
-    <h1>Your Cart</h1>
     {% if products %}
     <ul class="cart-items">
       {% for product in products %}
@@ -17,6 +16,13 @@
           <p>{{ product.description }}</p>
           <p class="cart-item-price">${{ product.price }}</p>
         </div>
+        <form
+          action="{{ url_for('remove_from_cart', id=product.id) }}"
+          method="POST"
+        >
+          <input type="hidden" name="product_id" value="{{ product.id }}" />
+          <button type="submit" class="remove-btn">Remove</button>
+        </form>
       </li>
       {% endfor %}
     </ul>
@@ -25,7 +31,7 @@
       <button class="checkout-btn">Pay now</button>
     </div>
     {% else %}
-    <p>Your cart is empty.</p>
+    <h1>Your cart is empty.</h1>
     {% endif %}
   </section>
 </main>
