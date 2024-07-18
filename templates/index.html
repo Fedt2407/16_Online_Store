@@ -14,14 +14,14 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore.
         </p>
-        <a href="#" class="btn">See more</a>
+        <a href="/product/7" class="btn">See more</a>
       </div>
     </div>
   </div>
 </section>
 
 <section class="featured-products">
-  {% for product in products %}
+  {% for product in products[:6] %}
   <div class="product-card">
     <img src="{{product.img_url}}" alt="Product 1" />
     <div class="product-description">
