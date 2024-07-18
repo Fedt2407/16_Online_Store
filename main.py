@@ -128,7 +128,15 @@ def cart():
         session['cart'] = []
     cart = session['cart']
     products = Product.query.filter(Product.id.in_(cart)).all()
-    return render_template('cart.html', products=products)
+    
+    total = sum(product.price for product in products)
+    
+    return render_template('cart.html', products=products, total=total)
+
+@app.route('/clear_cart')
+def clear_cart():
+    session['cart'] = []
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

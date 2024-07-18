@@ -2,42 +2,31 @@
 
 <main>
   <section class="cart-page">
-    <h1>Shopping Cart</h1>
-    <div class="cart-items">
-      <!-- Loop through cart items -->
-      {% for item in cart_items %}
-      <div class="cart-item">
-        <img src="{{ item.img_url }}" alt="{{ item.name }}" />
-        <div class="item-details">
-          <h2>{{ item.name }}</h2>
-          <p class="item-price">${{ item.price }}</p>
-          <div class="item-quantity">
-            <label for="quantity-{{ item.id }}">Quantity:</label>
-            <input
-              type="number"
-              id="quantity-{{ item.id }}"
-              name="quantity-{{ item.id }}"
-              value="{{ item.quantity }}"
-              min="1"
-            />
-          </div>
-          <div class="item-actions">
-            <button class="update-quantity" data-item-id="{{ item.id }}">
-              Update
-            </button>
-            <button class="remove-item" data-item-id="{{ item.id }}">
-              Remove
-            </button>
-          </div>
+    <h1>Your Cart</h1>
+    {% if products %}
+    <ul class="cart-items">
+      {% for product in products %}
+      <li class="cart-item">
+        <img
+          src="{{ product.img_url }}"
+          alt="{{ product.name }}"
+          class="cart-item-image"
+        />
+        <div class="cart-item-info">
+          <h2>{{ product.name }}</h2>
+          <p>{{ product.description }}</p>
+          <p class="cart-item-price">${{ product.price }}</p>
         </div>
-      </div>
+      </li>
       {% endfor %}
+    </ul>
+    <div class="cart-total">
+      <h2>Total: ${{ total }}</h2>
+      <button class="checkout-btn">Pay now</button>
     </div>
-    <div class="cart-summary">
-      <h2>Cart Summary</h2>
-      <p>Total: ${{ total_price }}</p>
-      <button class="checkout-btn">Proceed to Checkout</button>
-    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
   </section>
 </main>
 

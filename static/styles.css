@@ -489,11 +489,11 @@ form .field textarea {
   background: #555;
 }
 
-.cart-summary {
+.cart-total {
   text-align: right;
 }
 
-.cart-summary h2 {
+.cart-total h2 {
   margin-bottom: 1rem;
 }
 
