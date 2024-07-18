@@ -20,8 +20,13 @@
         <ul>
           <li><a href="{{ url_for('home') }}">Home</a></li>
           <li><a href="{{ url_for('contacts') }}">Contacts</a></li>
-          <li>
-            <a href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
+            <li>
+            <a href="{{ url_for('cart') }}"><i class="fas fa-shopping-cart"></i> Cart <span id="cart-count">
+              {% if num_items %}
+                ({{ num_items }})
+              {% endif %}
+            </span></a>
+            </li>
           </li>
           {% if user_name %}
             <li class="user-name">Hello, {{ user_name }}</li>

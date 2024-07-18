@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %}
+
+<main>
+  <section class="cart-page">
+    <h1>Shopping Cart</h1>
+    <div class="cart-items">
+      <!-- Loop through cart items -->
+      {% for item in cart_items %}
+      <div class="cart-item">
+        <img src="{{ item.img_url }}" alt="{{ item.name }}" />
+        <div class="item-details">
+          <h2>{{ item.name }}</h2>
+          <p class="item-price">${{ item.price }}</p>
+          <div class="item-quantity">
+            <label for="quantity-{{ item.id }}">Quantity:</label>
+            <input
+              type="number"
+              id="quantity-{{ item.id }}"
+              name="quantity-{{ item.id }}"
+              value="{{ item.quantity }}"
+              min="1"
+            />
+          </div>
+          <div class="item-actions">
+            <button class="update-quantity" data-item-id="{{ item.id }}">
+              Update
+            </button>
+            <button class="remove-item" data-item-id="{{ item.id }}">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="cart-summary">
+      <h2>Cart Summary</h2>
+      <p>Total: ${{ total_price }}</p>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </section>
+</main>
+
+{% endblock %}

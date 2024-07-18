@@ -87,7 +87,7 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
-            session['user_name'] = user.name  # Imposta il nome dell'utente nella sessione
+            session['user_name'] = user.name  # Set the user name in the session
             # Login successful
             return redirect(url_for('home'))  # Redirect to home page or another appropriate page
         else:
@@ -108,6 +108,27 @@ def logout():
 def product(id):
     product = Product.query.get(id)
     return render_template('products.html', product=product)
+
+@app.context_processor
+def inject_cart():
+    num_items = len(session['cart']) if 'cart' in session else 0
+    return {'num_items': num_items}
+
+@app.route('/add_to_cart/<int:id>', methods=['POST'])
+def add_to_cart(id):
+    if 'cart' not in session:
+        session['cart'] = []
+    session['cart'].append(id)
+    session.modified = True
+    return redirect(url_for('home'))
+
+@app.route('/cart')
+def cart():
+    if 'cart' not in session:
+        session['cart'] = []
+    cart = session['cart']
+    products = Product.query.filter(Product.id.in_(cart)).all()
+    return render_template('cart.html', products=products)
 
 if __name__ == '__main__':
     app.run(debug=True)
