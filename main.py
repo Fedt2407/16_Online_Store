@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -27,7 +28,7 @@ with app.app_context():
     db.create_all()
 
 def populate_db():
-    if Product.query.count() == 0:  # Popola solo se il database è vuoto
+    if Product.query.count() == 0:  # Check if the table is empty and populate it
         products = [
             Product(name='Product 1', price=19.99, description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.', img_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqknv9bG7lLalT0TE9Bs_VHiWRRIMZONbYew&s'),
             Product(name='Product 2', price=19.99, description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.', img_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqknv9bG7lLalT0TE9Bs_VHiWRRIMZONbYew&s'),
@@ -54,9 +55,25 @@ def home():
 def contacts():
     return render_template('contacts.html')
 
-@app.route('/register') 
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    message = ""
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm-password')
+
+        if password == confirm_password:
+            hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+            new_user = User(email=email, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+            message = "User registered successfully!"
+            return redirect(url_for('login'))  # Redirect to login page or another appropriate page
+        else:
+            message = "Passwords do not match!"
+    
+    return render_template('register.html', message=message)
 
 @app.route('/login') 
 def login():
