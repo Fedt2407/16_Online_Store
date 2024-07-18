@@ -28,7 +28,11 @@
     </ul>
     <div class="cart-total">
       <h2>Total: ${{ total }}</h2>
-      <button class="checkout-btn">Pay now</button>
+      <form action="{{ url_for('create_checkout_session') }}" method="POST">
+        <input type="hidden" name="total" value="{{ total }}" />
+        <button type="submit" class="checkout-btn">Pay now</button>
+      </form>
+    </div>
     </div>
     {% else %}
     <h1>Your cart is empty.</h1>

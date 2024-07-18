@@ -12,13 +12,15 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
     <header>
-      <img src="{{ url_for('static', filename='ws_logo.png') }}" alt="Logo" />
+      <a href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='ws_logo.png') }}" alt="Logo" />
+      </a>
       <nav>
         <ul>
-          <li><a href="{{ url_for('home') }}">Home</a></li>
           <li><a href="{{ url_for('contacts') }}">Contacts</a></li>
             <li>
             <a href="{{ url_for('cart') }}"><i class="fas fa-shopping-cart"></i> Cart <span id="cart-count">

@@ -1,8 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, session, g
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+import stripe
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get the Stripe API key from environment variables
+stripe.api_key = os.getenv('STRIPE_API_KEY')
 
 app = Flask(__name__)
+YOUR_DOMAIN = 'http://http://127.0.0.1:5000/'
 
 # DB setup
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -139,6 +149,44 @@ def remove_from_cart(id):
     session.modified = True
     return redirect(url_for('cart'))
 
+@app.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    try:
+        # Check if the cart is empty
+        if 'cart' not in session or not session['cart']:
+            return redirect(url_for('cart'))
+        
+        cart = session['cart']
+        products = Product.query.filter(Product.id.in_(cart)).all()
+
+        # Create a list of line items from the cart
+        line_items = []
+        for product in products:
+            line_items.append({
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': product.name,
+                    },
+                    'unit_amount': int(product.price * 100),  # Convert the price to cents
+                },
+                'quantity': cart.count(product.id),
+            })
+
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success.html',
+            cancel_url=YOUR_DOMAIN + '/cancel.html',
+        )
+    except Exception as e:
+        return str(e)
+
+    return redirect(checkout_session.url, code=303)
+
+
+# This route can be called manually to clear the cart for testing purposes
 @app.route('/clear_cart')
 def clear_cart():
     session['cart'] = []
