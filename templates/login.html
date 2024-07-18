@@ -3,7 +3,7 @@
 <main>
   <section class="register-page">
     <h1>Login</h1>
-    <form class="register-form">
+    <form class="register-form" action="{{ url_for('login') }}" method="POST">
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required />
@@ -12,9 +12,9 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required />
       </div>
-      <div class="form-group"></div>
-      <button type="submit" class="btn-register">Login</button>
+      <button type="submit" class="btn">Login</button>
     </form>
+    <p>{{ message }}</p>
   </section>
 </main>
 

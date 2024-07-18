@@ -75,9 +75,21 @@ def register():
     
     return render_template('register.html', message=message)
 
-@app.route('/login') 
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    message = ""
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.password, password):
+            # Login successful
+            return redirect(url_for('home'))  # Redirect to home page or another appropriate page
+        else:
+            message = "Invalid email or password"
+
+    return render_template('login.html', message=message)
 
 @app.route('/product/<int:id>')
 def product(id):
